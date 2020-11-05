@@ -72,7 +72,9 @@ def secret_message():
 @app.route('/message_results', methods=['POST'])
 def message_results():
     """Shows the user their message, with the letters in sorted order."""
+    # Retrieve the message with `request.form.get()` because POST request used
     input_message = request.form.get('message')
+    # Sort the message by calling the helper function defined at the top of the file
     sorted_message = sort_letters(input_message)
     return f"Here's your encrypted secret message: {sorted_message}"
 
@@ -97,7 +99,22 @@ def calculator():
 @app.route('/calculator_results')
 def calculator_results():
     """Shows the user the result of their calculation."""
-    pass
+    # Retrieve the two operands and cast them as integers
+    operand1 = int(request.args.get('operand1'))
+    operand2 = int(request.args.get('operand2'))
+    # Retrieve the operation selected from the drop-down menu
+    operation = request.args.get('operation')
+    # Compute the calculation based on the operation selected
+    if operation == "add":
+        result = operand1 + operand2
+    elif operation == "subtract":
+        result = operand1 - operand2
+    elif operation == "multiply":
+        result = operand1 * operand2
+    elif operation == "divide":
+        result = operand1 / operand2
+    return f"You chose to {operation} {operand1} and {operand2}. Your result is: {result}."
+    
 
 
 # List of compliments to be used in the `compliments_results` route (feel free 
