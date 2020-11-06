@@ -18,7 +18,7 @@ def homepage():
 def choose_froyo():
     """Shows a form to collect the user's Fro-Yo order."""
     return render_template('froyo_form.html')
-    # Below is the previous version
+    # Below is the previous version of this function
     # 
     # return """
     # <form action="/froyo_results" method="GET">
@@ -38,7 +38,7 @@ def show_froyo_results():
         "users_froyo_toppings": request.args.get('toppings')
     }
     return render_template('froyo_results.html', **context)
-    # Below is the previous version
+    # Below is the previous version of this function
     # 
     # users_froyo_flavor = request.args.get('flavor')
     # users_froyo_toppings = request.args.get('toppings')
@@ -92,7 +92,7 @@ def message_results():
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
     return render_template('calculator_form.html')
-    # Below is the previous version
+    # Below is the previous version of this function
     # 
     # return """
     # <form action="/calculator_results" method="GET">
@@ -127,9 +127,9 @@ def calculator_results():
         context['result'] = context['operand1'] * context['operand2']
     elif context['operation'] == "divide":
         context['result'] = context['operand1'] / context['operand2']
-        
+
     return render_template('calculator_results.html', **context)
-    # Below is the previous version
+    # Below is the previous version of this function
     # 
     # # Retrieve the two operands and cast them as integers
     # operand1 = int(request.args.get('operand1'))
@@ -186,9 +186,14 @@ def compliments():
 @app.route('/compliments_results')
 def compliments_results():
     """Show the user some compliments."""
+    # Save keys and values from compliments_form.html
     context = {
-        # TODO: Enter your context variables here.
+        'users_name': request.args.get('users_name'),
+        'wants_compliments': request.args.get('wants_compliments'),
+        'num_compliments': int(request.args.get('num_compliments'))
     }
+    # Append the dictionary with a random sample of compliments (dictionary name cannot be called before initialization)
+    context['random_compliments'] = random.sample(list_of_compliments, k=context['num_compliments'])
 
     return render_template('compliments_results.html', **context)
 
